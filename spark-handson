@@ -48,3 +48,38 @@ import org.apache.spark.sql.functions.col
 df.select(col("firstname").alias("fname"),col("lastname")).show()
 
 
+//Show Nested columns
+import org.apache.spark.sql.types.{StringType, StructType}
+val data2 = Seq(Row(Row("James","","Smith"),"OH","M"),
+    Row(Row("Anna","Rose",""),"NY","F"),
+    Row(Row("Julia","","Williams"),"OH","F"),
+    Row(Row("Maria","Anne","Jones"),"NY","M"),
+    Row(Row("Jen","Mary","Brown"),"NY","M"),
+    Row(Row("Mike","Mary","Williams"),"OH","M")
+)
+############################################################
+val schema = new StructType()
+    .add("name",new StructType()
+      .add("firstname",StringType)
+      .add("middlename",StringType)
+      .add("lastname",StringType))
+    .add("state",StringType)
+    .add("gender",StringType)
+
+val df2 = spark.createDataFrame(
+    spark.sparkContext.parallelize(data2),schema)
+df2.printSchema()
+df2.show(false)
+
+
+df2.select("name").show(false)
+
+df2.select("name.firstname","name.lastname").show(false)
+
+
+df2.select("name.*").show(false)
+
+
+
+#############################################################
+

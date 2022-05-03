@@ -49,6 +49,8 @@ df.select(col("firstname").alias("fname"),col("lastname")).show()
 
 
 //Show Nested columns
+
+###############################################################
 import org.apache.spark.sql.types.{StringType, StructType}
 val data2 = Seq(Row(Row("James","","Smith"),"OH","M"),
     Row(Row("Anna","Rose",""),"NY","F"),
@@ -57,7 +59,7 @@ val data2 = Seq(Row(Row("James","","Smith"),"OH","M"),
     Row(Row("Jen","Mary","Brown"),"NY","M"),
     Row(Row("Mike","Mary","Williams"),"OH","M")
 )
-############################################################
+
 val schema = new StructType()
     .add("name",new StructType()
       .add("firstname",StringType)

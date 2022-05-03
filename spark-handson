@@ -22,3 +22,29 @@ val schema = StructType( Array(
              ))
 val rowRDD = rdd.map(attributes => Row(attributes._1, attributes._2))
 val dfFromRDD3 = spark.createDataFrame(rowRDD,schema)
+
+
+
+
+
+val data = Seq(("James","Smith","USA","CA"),
+  ("Michael","Rose","USA","NY"),
+  ("Robert","Williams","USA","CA"),
+  ("Maria","Jones","USA","FL")
+  )
+val columns = Seq("firstname","lastname","country","state")
+import spark.implicits._
+val df = data.toDF(columns:_*)
+df.show(false)
+
+
+df.select("firstname","lastname").show()
+
+//Using Dataframe object name
+df.select(df("firstname"),df("lastname")).show()
+
+//Using col function, use alias() to get alias name
+import org.apache.spark.sql.functions.col
+df.select(col("firstname").alias("fname"),col("lastname")).show()
+
+

@@ -13,3 +13,12 @@ dfFromRDD1.printSchema()
 val dfFromRDD1 = rdd.toDF("language","users_count")
 dfFromRDD1.printSchema()
 
+
+import org.apache.spark.sql.types.{StringType, StructField, StructType}
+import org.apache.spark.sql.Row
+val schema = StructType( Array(
+                 StructField("language", StringType,true),
+                 StructField("language", StringType,true)
+             ))
+val rowRDD = rdd.map(attributes => Row(attributes._1, attributes._2))
+val dfFromRDD3 = spark.createDataFrame(rowRDD,schema)

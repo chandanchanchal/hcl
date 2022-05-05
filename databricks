@@ -56,3 +56,11 @@ val filterDF = flattenDF
   .sort($"lastName".asc)
 display(filterDF)
 #####################
+
+
+val countDistinctDF = nonNullDF.select($"firstName", $"lastName")
+  .groupBy($"firstName")
+  .agg(countDistinct($"lastName") as "distinct_last_names")
+display(countDistinctDF)
+
+############################

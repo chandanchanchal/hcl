@@ -69,9 +69,13 @@ display(filterDF)
 #####################
 
 
-val countDistinctDF = nonNullDF.select($"firstName", $"lastName")
-  .groupBy($"firstName")
-  .agg(countDistinct($"lastName") as "distinct_last_names")
-display(countDistinctDF)
+
+nonNullDF.createOrReplaceTempView("databricks_df_example")
+
+spark.sql("""
+  SELECT firstName, count(distinct lastName) as distinct_last_names
+  FROM databricks_df_example
+  GROUP BY firstName
+""").explain
 
 ############################

@@ -35,13 +35,9 @@ display(df2)
 
 ###################
 
-val filterDF = flattenDF
-  .filter($"firstName" === "xiangrui" || $"firstName" === "michael")
-  .sort($"lastName".asc)
-display(filterDF)
-#####################
 
-#####################
+
+
 
 import org.apache.spark.sql.functions._
 
@@ -53,4 +49,10 @@ display(explodeDF)
 val flattenDF = explodeDF.select($"col.*")
 flattenDF.show()
 
+#####################
+
+val filterDF = flattenDF
+  .filter($"firstName" === "xiangrui" || $"firstName" === "michael")
+  .sort($"lastName".asc)
+display(filterDF)
 #####################

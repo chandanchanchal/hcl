@@ -117,3 +117,25 @@ var df = spark.createDataFrame(row_rdd, df_schema)
 df.printSchema
 
 ##########################
+
+
+// Instead of registering a UDF, call the builtin functions to perform operations on the columns.
+// This will provide a performance improvement as the builtins compile and run in the platform's JVM.
+
+// Convert to a Date type
+val timestamp2datetype: (Column) => Column = (x) => { to_date(x) }
+df = df.withColumn("date", timestamp2datetype(col("end_date")))
+
+// Parse out the date only
+val timestamp2date: (Column) => Column = (x) => { regexp_replace(x," (\\d+)[:](\\d+)[:](\\d+).*$", "") }
+df = df.withColumn("date_only", timestamp2date(col("end_date")))
+
+// Split a string and index a field
+val parse_city: (Column) => Column = (x) => { split(x, "-")(1) }
+df = df.withColumn("city", parse_city(col("location")))
+
+// Perform a date diff function
+val dateDiff: (Column, Column) => Column = (x, y) => { datediff(to_date(y), to_date(x)) }
+df = df.withColumn("date_diff", dateDiff(col("start_date"), col("end_date")))
+
+######################

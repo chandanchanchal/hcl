@@ -33,6 +33,14 @@ val departmentsWithEmployeesSeq2 = Seq(departmentWithEmployees3, departmentWithE
 val df2 = departmentsWithEmployeesSeq2.toDF()
 display(df2)
 
+###################
+
+val filterDF = flattenDF
+  .filter($"firstName" === "xiangrui" || $"firstName" === "michael")
+  .sort($"lastName".asc)
+display(filterDF)
+#####################
+
 #####################
 
 import org.apache.spark.sql.functions._

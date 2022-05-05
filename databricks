@@ -33,6 +33,17 @@ val departmentsWithEmployeesSeq2 = Seq(departmentWithEmployees3, departmentWithE
 val df2 = departmentsWithEmployeesSeq2.toDF()
 display(df2)
 
+########################
+
+nonNullDF.createOrReplaceTempView("databricks_df_example")
+
+spark.sql("""
+  SELECT firstName, count(distinct lastName) as distinct_last_names
+  FROM databricks_df_example
+  GROUP BY firstName
+""").explain
+
+
 ###################
 
 

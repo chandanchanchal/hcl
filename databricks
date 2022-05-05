@@ -32,3 +32,17 @@ display(df1)
 val departmentsWithEmployeesSeq2 = Seq(departmentWithEmployees3, departmentWithEmployees4)
 val df2 = departmentsWithEmployeesSeq2.toDF()
 display(df2)
+
+#####################
+
+import org.apache.spark.sql.functions._
+
+val explodeDF = parquetDF.select(explode($"employees"))
+display(explodeDF)
+
+######################
+
+val flattenDF = explodeDF.select($"col.*")
+flattenDF.show()
+
+#####################

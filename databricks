@@ -139,3 +139,11 @@ val dateDiff: (Column, Column) => Column = (x, y) => { datediff(to_date(y), to_d
 df = df.withColumn("date_diff", dateDiff(col("start_date"), col("end_date")))
 
 ######################
+
+val add_n = udf((x: Integer, y: Integer) => x + y)
+
+// We register a UDF that adds a column to the DataFrame, and we cast the id column to an Integer type.
+df = df.withColumn("id_offset", add_n(lit(1000), col("id").cast("int")))
+display(df)
+
+################
